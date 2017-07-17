@@ -1,0 +1,66 @@
+﻿@model IEnumerable<peeweeptech.Models.Kod>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Codes</h2>
+
+<p>
+    @Html.ActionLink("New Code", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.baslik)
+        </th>
+     
+        <th>
+            @Html.DisplayNameFor(model => model.foto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tarih)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.üye_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.okunma)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Kategori.kategori_adi)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.baslik)
+        </td>
+       
+        <td>
+           <img width="75" src="@item.foto" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tarih)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.üye_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.okunma)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Kategori.kategori_adi)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.kod_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.kod_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.kod_id })
+        </td>
+    </tr>
+}
+
+</table>

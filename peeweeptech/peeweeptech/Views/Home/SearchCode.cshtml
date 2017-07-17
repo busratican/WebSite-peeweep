@@ -1,0 +1,57 @@
+﻿@model IEnumerable<peeweeptech.Models.Kod>
+
+@{
+    ViewBag.Title = "SearchCode";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Results...</h2>
+
+
+<div class="col-md-8">
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.baslik)
+            </th>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.tarih)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.okunma)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Kategori.kategori_adi)
+            </th>
+            
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a href="/Home/CodeDetails/@item.kod_id">@Html.DisplayFor(modelItem => item.baslik)</a>
+                </td>
+              
+                <td>
+                    <p><span class="glyphicon glyphicon-time"></span>@String.Format("{0: MMMM yyyy}", item.tarih)</p>
+                    @*@Html.DisplayFor(modelItem => item.tarih)*@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.okunma)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kategori.kategori_adi)
+                </td>
+               
+               
+            </tr>
+        }
+
+    </table>
+
+</div>
+

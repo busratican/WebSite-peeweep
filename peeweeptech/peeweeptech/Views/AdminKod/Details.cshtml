@@ -1,0 +1,74 @@
+﻿@model peeweeptech.Models.Kod
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Kod</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.baslik)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.baslik)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.icerik)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.icerik)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.foto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.foto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tarih)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tarih)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.okunma)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.okunma)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Kategori.kategori_adi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kategori.kategori_adi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Uye.kullanici_adi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Uye.kullanici_adi)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back", "Index")
+</p>

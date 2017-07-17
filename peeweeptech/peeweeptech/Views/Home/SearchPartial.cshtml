@@ -1,0 +1,14 @@
+﻿<h4>Search</h4>
+
+@using (Html.BeginForm("SearchCode", "Home", FormMethod.Post, new  { enctype="multipart/form-data"}))
+{
+    <div class="input-group">
+    <input id="Search" name="Search"  type="text" class="form-control">
+    <span class="input-group-btn">
+        <button class="btn btn-default" value="Search" type="submit">
+            <span class="glyphicon glyphicon-search"></span>
+        </button>
+    </span>
+</div>
+
+}

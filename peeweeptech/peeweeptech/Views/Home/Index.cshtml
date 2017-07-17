@@ -1,0 +1,72 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<peeweeptech.Models.Kod>
+
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="col-md-8">
+
+    @foreach (var item in Model)
+    {
+
+        <article class="col-sm-12">
+
+
+            <!-- First Blog Post -->
+            <h2>
+                <a href="/Home/CodeDetails/@item.kod_id">@item.baslik</a>
+            </h2>
+
+            <p>
+                <span class="glyphicon glyphicon-time"></span>@String.Format("{0: MMMM yyyy}", item.tarih)
+                <span class="glyphicon glyphicon-tags"> </span> @item.Etiket.Count
+            </p>
+           
+           
+             <hr>
+            <img class="img-responsive" src="@item.foto" alt="@item.baslik">
+            <hr>
+
+            @if (item.icerik != null)
+            { 
+                
+             if (item.icerik.Length > 500)
+             {
+                <p>
+                    @Html.Raw(item.icerik.Substring(0, 500)) ...
+                </p>
+            }
+            else
+            {
+                 <p>
+                    @Html.Raw(item.icerik)
+                </p>
+            }
+           }
+
+            <a class="btn btn-primary" href="/Home/CodeDetails/@item.kod_id">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+            
+
+            <hr>
+
+        </article>
+    }
+
+    <div class="row">
+        <div class="col-md-8 text-center">
+            <div class="pagedList pagination-lg">
+                @Html.PagedListPager(Model, page => Url.Action("Index", new {page}),PagedListRenderOptions.Classic)
+            </div>
+        </div>
+    </div>
+
+
+</div>

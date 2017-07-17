@@ -1,0 +1,109 @@
+﻿@model peeweeptech.Models.Kod
+
+@{
+    ViewBag.Title = "CodeDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    .tag{
+        background-color:beige;
+    }
+</style>
+<div class="col-md-8">
+    <h1>@Model.baslik</h1>
+    <!-- Author -->
+    
+    <hr>
+    <!-- Date/Time -->
+    <p><span class="glyphicon glyphicon-time"></span>@String.Format("{0: MMMM yyyy}", Model.tarih)</p>
+    <hr>
+    <!-- Preview Image -->
+    <img class="img-responsive" src="@Model.foto" alt="@Model.baslik">
+    <hr>
+    <!-- Post Content -->
+    <p class="lead">
+        @Html.Raw(Model.icerik)
+    </p>
+
+    <div class="well">
+        @foreach (var item in Model.Etiket)
+        {
+            <span class="tag">@item.etiket_adi </span>
+        }
+    </div>
+
+    @*<p><span class="tag">Okunma Sayısı : @Model.okunma</span></p>*@
+    <hr>
+</div>
+
+
+@*<h2>CodeDetails</h2>
+
+<div>
+    <h4>Kod</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.baslik)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.baslik)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.icerik)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.icerik)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.foto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.foto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tarih)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tarih)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.okunma)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.okunma)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Kategori.kategori_adi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kategori.kategori_adi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Uye.kullanici_adi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Uye.kullanici_adi)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.kod_id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>*@

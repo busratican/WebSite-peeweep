@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="peweepDB.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Etiket">
+    <Key>
+      <PropertyRef Name="etiket_id" />
+    </Key>
+    <Property Name="etiket_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="etiket_adi" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Kategori">
+    <Key>
+      <PropertyRef Name="kategori_id" />
+    </Key>
+    <Property Name="kategori_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="kategori_adi" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Kod">
+    <Key>
+      <PropertyRef Name="kod_id" />
+    </Key>
+    <Property Name="kod_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="baslik" Type="nvarchar" MaxLength="500" />
+    <Property Name="icerik" Type="nvarchar(max)" />
+    <Property Name="foto" Type="nvarchar" MaxLength="500" />
+    <Property Name="tarih" Type="datetime" />
+    <Property Name="kategori_id" Type="int" />
+    <Property Name="üye_id" Type="int" />
+    <Property Name="okunma" Type="int" />
+  </EntityType>
+  <EntityType Name="KodEtiket">
+    <Key>
+      <PropertyRef Name="kod_id" />
+      <PropertyRef Name="etiket_id" />
+    </Key>
+    <Property Name="kod_id" Type="int" Nullable="false" />
+    <Property Name="etiket_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Uye">
+    <Key>
+      <PropertyRef Name="üye_id" />
+    </Key>
+    <Property Name="üye_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="kullanici_adi" Type="nvarchar" MaxLength="50" />
+    <Property Name="email" Type="nvarchar" MaxLength="50" />
+    <Property Name="şifre" Type="nvarchar" MaxLength="20" />
+    <Property Name="AdSoyad" Type="nvarchar" MaxLength="50" />
+    <Property Name="foto" Type="nvarchar" MaxLength="250" />
+    <Property Name="yetki_id" Type="int" />
+  </EntityType>
+  <EntityType Name="Yetki">
+    <Key>
+      <PropertyRef Name="yetki_id" />
+    </Key>
+    <Property Name="yetki_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="yetki" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Yorum">
+    <Key>
+      <PropertyRef Name="yorum_id" />
+    </Key>
+    <Property Name="yorum_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="icerik" Type="nvarchar" MaxLength="500" />
+    <Property Name="üye_id" Type="int" />
+    <Property Name="kod_id" Type="int" />
+    <Property Name="tarih" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <Association Name="FK_Kod_Kategori">
+    <End Role="Kategori" Type="Self.Kategori" Multiplicity="0..1" />
+    <End Role="Kod" Type="Self.Kod" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kategori">
+        <PropertyRef Name="kategori_id" />
+      </Principal>
+      <Dependent Role="Kod">
+        <PropertyRef Name="kategori_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kod_Uye">
+    <End Role="Uye" Type="Self.Uye" Multiplicity="0..1" />
+    <End Role="Kod" Type="Self.Kod" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Uye">
+        <PropertyRef Name="üye_id" />
+      </Principal>
+      <Dependent Role="Kod">
+        <PropertyRef Name="üye_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_KodEtiket_Etiket">
+    <End Role="Etiket" Type="Self.Etiket" Multiplicity="1" />
+    <End Role="KodEtiket" Type="Self.KodEtiket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Etiket">
+        <PropertyRef Name="etiket_id" />
+      </Principal>
+      <Dependent Role="KodEtiket">
+        <PropertyRef Name="etiket_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_KodEtiket_Kod">
+    <End Role="Kod" Type="Self.Kod" Multiplicity="1" />
+    <End Role="KodEtiket" Type="Self.KodEtiket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kod">
+        <PropertyRef Name="kod_id" />
+      </Principal>
+      <Dependent Role="KodEtiket">
+        <PropertyRef Name="kod_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Uye_Yetki">
+    <End Role="Yetki" Type="Self.Yetki" Multiplicity="0..1" />
+    <End Role="Uye" Type="Self.Uye" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Yetki">
+        <PropertyRef Name="yetki_id" />
+      </Principal>
+      <Dependent Role="Uye">
+        <PropertyRef Name="yetki_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Yorum_Kod">
+    <End Role="Kod" Type="Self.Kod" Multiplicity="0..1" />
+    <End Role="Yorum" Type="Self.Yorum" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kod">
+        <PropertyRef Name="kod_id" />
+      </Principal>
+      <Dependent Role="Yorum">
+        <PropertyRef Name="kod_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Yorum_Uye">
+    <End Role="Uye" Type="Self.Uye" Multiplicity="0..1" />
+    <End Role="Yorum" Type="Self.Yorum" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Uye">
+        <PropertyRef Name="üye_id" />
+      </Principal>
+      <Dependent Role="Yorum">
+        <PropertyRef Name="üye_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="peweepDBStoreContainer">
+    <EntitySet Name="Etiket" EntityType="Self.Etiket" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Kategori" EntityType="Self.Kategori" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Kod" EntityType="Self.Kod" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KodEtiket" EntityType="Self.KodEtiket" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Uye" EntityType="Self.Uye" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Yetki" EntityType="Self.Yetki" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Yorum" EntityType="Self.Yorum" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Kod_Kategori" Association="Self.FK_Kod_Kategori">
+      <End Role="Kategori" EntitySet="Kategori" />
+      <End Role="Kod" EntitySet="Kod" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kod_Uye" Association="Self.FK_Kod_Uye">
+      <End Role="Uye" EntitySet="Uye" />
+      <End Role="Kod" EntitySet="Kod" />
+    </AssociationSet>
+    <AssociationSet Name="FK_KodEtiket_Etiket" Association="Self.FK_KodEtiket_Etiket">
+      <End Role="Etiket" EntitySet="Etiket" />
+      <End Role="KodEtiket" EntitySet="KodEtiket" />
+    </AssociationSet>
+    <AssociationSet Name="FK_KodEtiket_Kod" Association="Self.FK_KodEtiket_Kod">
+      <End Role="Kod" EntitySet="Kod" />
+      <End Role="KodEtiket" EntitySet="KodEtiket" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Uye_Yetki" Association="Self.FK_Uye_Yetki">
+      <End Role="Yetki" EntitySet="Yetki" />
+      <End Role="Uye" EntitySet="Uye" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Yorum_Kod" Association="Self.FK_Yorum_Kod">
+      <End Role="Kod" EntitySet="Kod" />
+      <End Role="Yorum" EntitySet="Yorum" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Yorum_Uye" Association="Self.FK_Yorum_Uye">
+      <End Role="Uye" EntitySet="Uye" />
+      <End Role="Yorum" EntitySet="Yorum" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="peeweeptechDB" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Etiket">
+    <Key>
+      <PropertyRef Name="etiket_id" />
+    </Key>
+    <Property Name="etiket_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="etiket_adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Kods" Relationship="Self.KodEtiket" FromRole="Etiket" ToRole="Kod" />
+  </EntityType>
+  <EntityType Name="Kategori">
+    <Key>
+      <PropertyRef Name="kategori_id" />
+    </Key>
+    <Property Name="kategori_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="kategori_adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Kods" Relationship="Self.FK_Kod_Kategori" FromRole="Kategori" ToRole="Kod" />
+  </EntityType>
+  <EntityType Name="Kod">
+    <Key>
+      <PropertyRef Name="kod_id" />
+    </Key>
+    <Property Name="kod_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="baslik" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="icerik" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="foto" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="tarih" Type="DateTime" Precision="3" />
+    <Property Name="kategori_id" Type="Int32" />
+    <Property Name="üye_id" Type="Int32" />
+    <Property Name="okunma" Type="Int32" />
+    <NavigationProperty Name="Kategori" Relationship="Self.FK_Kod_Kategori" FromRole="Kod" ToRole="Kategori" />
+    <NavigationProperty Name="Uye" Relationship="Self.FK_Kod_Uye" FromRole="Kod" ToRole="Uye" />
+    <NavigationProperty Name="Yorums" Relationship="Self.FK_Yorum_Kod" FromRole="Kod" ToRole="Yorum" />
+    <NavigationProperty Name="Etikets" Relationship="Self.KodEtiket" FromRole="Kod" ToRole="Etiket" />
+  </EntityType>
+  <EntityType Name="Uye">
+    <Key>
+      <PropertyRef Name="üye_id" />
+    </Key>
+    <Property Name="üye_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="kullanici_adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="şifre" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="AdSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="foto" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="yetki_id" Type="Int32" />
+    <NavigationProperty Name="Kods" Relationship="Self.FK_Kod_Uye" FromRole="Uye" ToRole="Kod" />
+    <NavigationProperty Name="Yetki" Relationship="Self.FK_Uye_Yetki" FromRole="Uye" ToRole="Yetki" />
+    <NavigationProperty Name="Yorums" Relationship="Self.FK_Yorum_Uye" FromRole="Uye" ToRole="Yorum" />
+  </EntityType>
+  <EntityType Name="Yetki">
+    <Key>
+      <PropertyRef Name="yetki_id" />
+    </Key>
+    <Property Name="yetki_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="yetki1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Uyes" Relationship="Self.FK_Uye_Yetki" FromRole="Yetki" ToRole="Uye" />
+  </EntityType>
+  <EntityType Name="Yorum">
+    <Key>
+      <PropertyRef Name="yorum_id" />
+    </Key>
+    <Property Name="yorum_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="icerik" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="üye_id" Type="Int32" />
+    <Property Name="kod_id" Type="Int32" />
+    <Property Name="tarih" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Kod" Relationship="Self.FK_Yorum_Kod" FromRole="Yorum" ToRole="Kod" />
+    <NavigationProperty Name="Uye" Relationship="Self.FK_Yorum_Uye" FromRole="Yorum" ToRole="Uye" />
+  </EntityType>
+  <Association Name="FK_Kod_Kategori">
+    <End Role="Kategori" Type="Self.Kategori" Multiplicity="0..1" />
+    <End Role="Kod" Type="Self.Kod" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kategori">
+        <PropertyRef Name="kategori_id" />
+      </Principal>
+      <Dependent Role="Kod">
+        <PropertyRef Name="kategori_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kod_Uye">
+    <End Role="Uye" Type="Self.Uye" Multiplicity="0..1" />
+    <End Role="Kod" Type="Self.Kod" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Uye">
+        <PropertyRef Name="üye_id" />
+      </Principal>
+      <Dependent Role="Kod">
+        <PropertyRef Name="üye_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Yorum_Kod">
+    <End Role="Kod" Type="Self.Kod" Multiplicity="0..1" />
+    <End Role="Yorum" Type="Self.Yorum" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kod">
+        <PropertyRef Name="kod_id" />
+      </Principal>
+      <Dependent Role="Yorum">
+        <PropertyRef Name="kod_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Uye_Yetki">
+    <End Role="Yetki" Type="Self.Yetki" Multiplicity="0..1" />
+    <End Role="Uye" Type="Self.Uye" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Yetki">
+        <PropertyRef Name="yetki_id" />
+      </Principal>
+      <Dependent Role="Uye">
+        <PropertyRef Name="yetki_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Yorum_Uye">
+    <End Role="Uye" Type="Self.Uye" Multiplicity="0..1" />
+    <End Role="Yorum" Type="Self.Yorum" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Uye">
+        <PropertyRef Name="üye_id" />
+      </Principal>
+      <Dependent Role="Yorum">
+        <PropertyRef Name="üye_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="KodEtiket">
+    <End Role="Etiket" Type="Self.Etiket" Multiplicity="*" />
+    <End Role="Kod" Type="Self.Kod" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Etikets" EntityType="Self.Etiket" />
+    <EntitySet Name="Kategoris" EntityType="Self.Kategori" />
+    <EntitySet Name="Kods" EntityType="Self.Kod" />
+    <EntitySet Name="Uyes" EntityType="Self.Uye" />
+    <EntitySet Name="Yetkis" EntityType="Self.Yetki" />
+    <EntitySet Name="Yorums" EntityType="Self.Yorum" />
+    <AssociationSet Name="FK_Kod_Kategori" Association="Self.FK_Kod_Kategori">
+      <End Role="Kategori" EntitySet="Kategoris" />
+      <End Role="Kod" EntitySet="Kods" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kod_Uye" Association="Self.FK_Kod_Uye">
+      <End Role="Uye" EntitySet="Uyes" />
+      <End Role="Kod" EntitySet="Kods" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Yorum_Kod" Association="Self.FK_Yorum_Kod">
+      <End Role="Kod" EntitySet="Kods" />
+      <End Role="Yorum" EntitySet="Yorums" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Uye_Yetki" Association="Self.FK_Uye_Yetki">
+      <End Role="Yetki" EntitySet="Yetkis" />
+      <End Role="Uye" EntitySet="Uyes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Yorum_Uye" Association="Self.FK_Yorum_Uye">
+      <End Role="Uye" EntitySet="Uyes" />
+      <End Role="Yorum" EntitySet="Yorums" />
+    </AssociationSet>
+    <AssociationSet Name="KodEtiket" Association="Self.KodEtiket">
+      <End Role="Etiket" EntitySet="Etikets" />
+      <End Role="Kod" EntitySet="Kods" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(peeweeptechDB.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(peeweeptechDB.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>

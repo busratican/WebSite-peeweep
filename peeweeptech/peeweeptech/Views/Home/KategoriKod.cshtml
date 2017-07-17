@@ -1,0 +1,127 @@
+﻿@model IEnumerable<peeweeptech.Models.Kod>
+
+@{
+    ViewBag.Title = "KategoriKod";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*@using GridMvc.Html
+
+<link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/gridmvc.min.js")" type="text/javascript"> </script>
+<link href="@Url.Content("~/Content/Css/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/gridmvc.min.js")" type="text/javascript"></script>
+<div class="col-md-8">
+    
+    @Html.Grid(Model).Columns(columns =>
+                        {
+                            columns.Add(m => m.Kategori.kategori_adi).Titled("Category Name").SetWidth(110).Sortable(true).Filterable(true);
+                            columns.Add( m => m.baslik).Sortable(true).Filterable(true);
+                            columns.Add(m => m.tarih).Sortable(true).Filterable(true);
+                            columns.Add(m => m.okunma).Sortable(true).Filterable(true);
+                        }).WithPaging(8)
+
+  
+
+</div>*@
+
+
+<div class="col-md-8">
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.baslik)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.tarih)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.okunma)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Kategori.kategori_adi)
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a href="/Home/CodeDetails/@item.kod_id">@Html.DisplayFor(modelItem => item.baslik)</a>
+                </td>
+
+                <td>
+                    <p><span class="glyphicon glyphicon-time"></span>@String.Format("{0: MMMM yyyy}", item.tarih)</p>
+                    @*@Html.DisplayFor(modelItem => item.tarih)*@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.okunma)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kategori.kategori_adi)
+                </td>
+
+
+            </tr>
+        }
+
+    </table>
+
+</div>
+
+@*<div class="col-md-8">
+
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.baslik)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.icerik)
+            </th>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.tarih)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.okunma)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Kategori.kategori_adi)
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.baslik)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.icerik)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.tarih)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.okunma)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kategori.kategori_adi)
+                </td>
+
+
+            </tr>
+        }
+
+    </table>
+
+</div>*@
